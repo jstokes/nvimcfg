@@ -9,6 +9,12 @@ return {
   {
     'folke/which-key.nvim',
     event = 'VeryLazy',
+  -- no-neck-pain: registered in a separate spec, but add which-key group label early
+  { 'shortcuts/no-neck-pain.nvim', keys = { '<leader>z' }, opts = false, init = function()
+    local ok_wk, which_key = pcall(require, 'which-key')
+    if ok_wk then which_key.add({ { '<leader>z', group = 'Zen / NoNeckPain' } }) end
+  end },
+
     opts = {
       plugins = { spelling = true },
       win = { border = 'single' },

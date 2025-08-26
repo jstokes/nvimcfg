@@ -30,6 +30,7 @@ require('lazy').setup({
     { import = 'plugins.cmp' },
     { import = 'plugins.conform' },
     { import = 'plugins.clojure' },
+    { import = 'plugins.lsp' },
     { import = 'plugins.lint' },
     { import = 'plugins.ai' },
   },
