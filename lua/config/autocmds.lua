@@ -1,0 +1,1 @@
+-- Intentionally left empty: formatting on save handled by conform.nvim
