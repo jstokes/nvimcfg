@@ -3,17 +3,30 @@ return {
   { 'nvim-tree/nvim-web-devicons', lazy = true },
 
   -- Colorscheme: load here so it's applied early
-  { 'EdenEast/nightfox.nvim', priority = 1000, config = function() vim.cmd('colorscheme nightfox') end },
+  {
+    'EdenEast/nightfox.nvim',
+    priority = 1000,
+    config = function()
+      vim.cmd 'colorscheme carbonfox'
+    end,
+  },
 
   -- which-key
   {
     'folke/which-key.nvim',
     event = 'VeryLazy',
-  -- no-neck-pain: registered in a separate spec, but add which-key group label early
-  { 'shortcuts/no-neck-pain.nvim', keys = { '<leader>z' }, opts = false, init = function()
-    local ok_wk, which_key = pcall(require, 'which-key')
-    if ok_wk then which_key.add({ { '<leader>z', group = 'Zen / NoNeckPain' } }) end
-  end },
+    -- no-neck-pain: registered in a separate spec, but add which-key group label early
+    {
+      'shortcuts/no-neck-pain.nvim',
+      keys = { '<leader>z' },
+      opts = false,
+      init = function()
+        local ok_wk, which_key = pcall(require, 'which-key')
+        if ok_wk then
+          which_key.add { { '<leader>z', group = 'Zen / NoNeckPain' } }
+        end
+      end,
+    },
 
     opts = {
       plugins = { spelling = true },

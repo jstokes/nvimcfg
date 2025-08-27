@@ -1,14 +1,14 @@
 return {
-  -- ALE for linting (clojure: clj-kondo, joker)
   {
     'dense-analysis/ale',
     init = function()
+      vim.g.ale_enabled = 1
       vim.g.ale_linters = {
-        clojure = { 'clj-kondo', 'joker' },
+        clojure = { 'clj-kondo' },
       }
-      -- Optional: show signs but don't open loclist automatically
-      vim.g.ale_sign_column_always = 1
-      vim.g.ale_open_list = 0
+      vim.g.ale_change_directory = 1
+      vim.g.ale_disable_lsp = 1
+      vim.g.ale_clojure_clj_kondo_use_stdin = 0
     end,
   },
 }
