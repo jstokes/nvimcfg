@@ -8,6 +8,11 @@ return {
       vim.g['conjure#client#clojure#nrepl#eval#pretty_print'] = true
       vim.g['conjure#completion#omnifunc'] = 'ConjureOmnifunc'
 
+      -- Prefer REPL-aware completion with code context for better local symbol suggestions
+      vim.g['conjure#client#clojure#nrepl#completion#with_context'] = true
+      -- Optional: improve CLJS completion via clj-suitable if available
+      vim.g['conjure#client#clojure#nrepl#completion#cljs#use_suitable'] = true
+
       -- Workaround: defer auto-repl to avoid race with buffer/window during startup
       -- Disable built-in auto_repl (we'll start it ourselves on FileType)
       vim.g['conjure#client#clojure#nrepl#connection#auto_repl#enabled'] = false

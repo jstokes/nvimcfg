@@ -18,18 +18,30 @@ vim.opt.softtabstop = 2
 vim.o.exrc = true
 vim.o.secure = true
 
-vim.opt.signcolumn = 'auto:2'
+vim.opt.signcolumn = 'no'
 
--- Diagnostics configuration: keep visible while typing (Option A)
+-- Diagnostics configuration: minimal clutter
 vim.diagnostic.config({
-  update_in_insert = true,
+  update_in_insert = false,
   severity_sort = true,
-  signs = { priority = 10 },
+  signs = false, -- no gutter signs
   virtual_text = {
-    spacing = 2,
-    prefix = "●",
+    spacing = 0,
+    -- icon-only inline diagnostics (no text), WARN/ERROR only
+    prefix = function(d)
+      local s = vim.diagnostic.severity
+      local icons = {
+        [s.ERROR] = "",
+        [s.WARN]  = "",
+        [s.INFO]  = "",
+        [s.HINT]  = "",
+      }
+      return (icons[d.severity] or "●") .. " "
+    end,
+    format = function() return "" end,
+    severity = { min = vim.diagnostic.severity.WARN },
     source = "if_many",
   },
-  underline = true,
+  underline = { severity = { min = vim.diagnostic.severity.WARN } },
   float = { border = "rounded", source = "if_many" },
 })
