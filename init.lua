@@ -26,6 +26,8 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Load core options early
 require 'config.options'
+require 'config.autocmds'
+
 
 -- Plugin specs are split by domain under lua/plugins/*.lua
 require('lazy').setup {
@@ -41,6 +43,7 @@ require('lazy').setup {
     { import = 'plugins.clojure' },
     { import = 'plugins.lint' },
     { import = 'plugins.lsp' },
+    { import = 'plugins.opencode' },
   },
   checker = { enabled = false },
   rocks = { enabled = false },

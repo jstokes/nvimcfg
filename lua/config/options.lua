@@ -1,5 +1,5 @@
 -- Core options
-vim.opt.number = true
+vim.opt.number = false
 vim.opt.relativenumber = false
 vim.opt.splitbelow = true
 vim.opt.splitright = true

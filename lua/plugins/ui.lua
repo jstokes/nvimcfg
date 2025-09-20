@@ -12,6 +12,14 @@ return {
     priority = 1000,
     config = function()
       vim.cmd 'colorscheme carbonfox'
+      -- Make split borders more apparent
+      -- Use a thicker vertical split character and an accent color for the separator
+      pcall(function()
+        vim.opt.fillchars:append({ vert = '┃' })
+      end)
+      -- Use FloatBorder colors for window separators for better visibility
+      pcall(vim.api.nvim_set_hl, 0, 'WinSeparator', { link = 'FloatBorder' })
+      pcall(vim.api.nvim_set_hl, 0, 'VertSplit', { link = 'FloatBorder' })
     end,
   },
 

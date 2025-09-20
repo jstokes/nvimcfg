@@ -9,6 +9,7 @@ return {
       'nvim-telescope/telescope-ui-select.nvim',
       'nvim-telescope/telescope-project.nvim',
       'nvim-telescope/telescope-file-browser.nvim',
+      { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make', cond = function() return vim.fn.executable('make') == 1 end },
     },
     config = function()
       local ok, telescope = pcall(require, 'telescope')
@@ -39,10 +40,19 @@ return {
             },
           },
         },
+        extensions = {
+          fzf = {
+            fuzzy = true,                    -- FZF-style fuzzy matching
+            override_generic_sorter = true,  -- apply to most pickers (e.g. live_grep)
+            override_file_sorter = true,     -- apply to file pickers (e.g. find_files)
+            case_mode = 'smart_case',        -- same as fzf: smart case
+          },
+        },
       })
       pcall(telescope.load_extension, 'ui-select')
       pcall(telescope.load_extension, 'project')
       pcall(telescope.load_extension, 'file_browser')
+      pcall(telescope.load_extension, 'fzf')
     end,
   },
 }

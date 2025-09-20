@@ -1,6 +1,9 @@
 -- Session persistence mappings
 -- stylua: ignore
 
+-- Register Git group for which-key (including worktrees)
+pcall(require, 'which-key')
+
 -- LSP convenience mappings (global) with which-key registration under <leader>l
 local function with_lsp(fn)
   return function()
@@ -85,6 +88,8 @@ if ok_wk then
     { '<leader>c', group = 'Code' },
   })
   wk.add({
+    { '<leader>gW', desc = 'Worktree: create' },
+    { '<leader>gw', desc = 'Worktree: list/switch' },
     { '<leader>k', group = 'Lisp (sexp)' },
     { '<leader>kb', group = 'Barf (emit)' },
     { '<leader>kw', group = 'Wrap' },
@@ -221,6 +226,19 @@ map('n', '<leader>gl', function()
   local ok, gitlinker = pcall(require, 'gitlinker')
   if ok then gitlinker.get_buf_range_url() else vim.notify('gitlinker not loaded', vim.log.levels.WARN) end
 end, { desc = 'Copy GitHub permalink' })
+-- Git worktrees via Telescope
+map('n', '<leader>gw', function()
+  local ok = pcall(function()
+    require('telescope').extensions.git_worktree.git_worktrees()
+  end)
+  if not ok then vim.notify('git-worktree or telescope not loaded', vim.log.levels.WARN) end
+end, { desc = 'Worktree: list/switch' })
+map('n', '<leader>gW', function()
+  local ok = pcall(function()
+    require('telescope').extensions.git_worktree.create_git_worktree()
+  end)
+  if not ok then vim.notify('git-worktree or telescope not loaded', vim.log.levels.WARN) end
+end, { desc = 'Worktree: create' })
 -- Neogit (status)
 map('n', '<leader>gg', function()
   local ok, neogit = pcall(require, 'neogit')
@@ -321,3 +339,6 @@ vim.keymap.set('n', '<leader>dt', function()
   vim.diagnostic.config({ virtual_text = not enabled })
   vim.notify('Diagnostics virtual_text: ' .. (enabled and 'OFF' or 'ON'), vim.log.levels.INFO)
 end, { desc = 'Toggle virtual text' })
+
+-- Terminal: pass Ctrl-w to Vim
+vim.keymap.set('t', '<C-w>', [[<C-\><C-n><C-w>]], { desc = 'Terminal: window command passthrough', silent = true })

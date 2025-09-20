@@ -28,6 +28,35 @@ return {
   { 'ruifm/gitlinker.nvim', dependencies = { 'nvim-lua/plenary.nvim' }, opts = {} },
   { 'TimUntersberger/neogit', dependencies = { 'nvim-lua/plenary.nvim' } },
   {
+    'ThePrimeagen/git-worktree.nvim',
+    dependencies = { 'nvim-telescope/telescope.nvim' },
+    config = function()
+      local ok, Worktree = pcall(require, 'git-worktree')
+      if not ok then return end
+      Worktree.setup({
+        change_directory_command = 'cd',
+        update_on_change = true,
+        update_on_change_command = 'e .',
+        clearjumps_on_change = true,
+        autopush = false,
+      })
+      -- Load Telescope extension if available
+      pcall(function()
+        require('telescope').load_extension('git_worktree')
+      end)
+
+      -- If you want Neogit to open automatically on switch, uncomment below:
+      -- Worktree.on_tree_change(function(op)
+      --   if op == Worktree.Operations.Switch then
+      --     vim.schedule(function()
+      --       local ok_ng, neogit = pcall(require, 'neogit')
+      --       if ok_ng then neogit.open({ kind = 'tab' }) end
+      --     end)
+      --   end
+      -- end)
+    end,
+  },
+  {
     'pwntester/octo.nvim',
     dependencies = {
       'nvim-lua/plenary.nvim',
