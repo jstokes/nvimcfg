@@ -235,10 +235,10 @@ map('n', '<leader>gw', function()
 end, { desc = 'Worktree: list/switch' })
 map('n', '<leader>gW', function()
   local ok = pcall(function()
-    require('telescope').extensions.git_worktree.create_git_worktree()
+    vim.cmd('WorktreeCreateTrees')
   end)
-  if not ok then vim.notify('git-worktree or telescope not loaded', vim.log.levels.WARN) end
-end, { desc = 'Worktree: create' })
+  if not ok then vim.notify('git-worktree not loaded', vim.log.levels.WARN) end
+end, { desc = 'Worktree: create (.trees/{branch})' })
 -- Neogit (status)
 map('n', '<leader>gg', function()
   local ok, neogit = pcall(require, 'neogit')

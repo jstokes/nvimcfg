@@ -8,6 +8,7 @@
   "cmp-nvim-lsp": { "branch": "main", "commit": "bd5a7d6db125d4654b50eeae9f5217f24bb22fd3" },
   "cmp-path": { "branch": "main", "commit": "c642487086dbd9a93160e1679a1327be111cbc25" },
   "cmp_luasnip": { "branch": "master", "commit": "98d9cb5c2c38532bd9bdb481067b20fea8f32e90" },
+  "codecompanion.nvim": { "branch": "main", "commit": "61b2ab5f4f534c1c5625a1d57ab1e071cc81d2fc" },
   "conform.nvim": { "branch": "master", "commit": "b4aab989db276993ea5dcb78872be494ce546521" },
   "conjure": { "branch": "main", "commit": "5f9171a62ec5bf6786608a7fde57dad64d497d54" },
   "git-worktree.nvim": { "branch": "master", "commit": "f247308e68dab9f1133759b05d944569ad054546" },
