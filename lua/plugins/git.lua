@@ -83,19 +83,30 @@ return {
         local exists_local = cmd_ok('git show-ref --verify --quiet "refs/heads/' .. branch .. '"')
 
         -- Decide upstream/base:
-        -- - If no base provided and branch doesn't exist locally → use origin/main
+        -- - If no base provided and branch doesn't exist locally → use origin HEAD (e.g. origin/main), fallback to origin/main/master
         -- - If branch exists locally → ignore base (checkout existing)
         local final_upstream = upstream
-        if final_upstream == nil or final_upstream == '' then
-          if not exists_local then
-            final_upstream = 'origin/main'
-          else
-            final_upstream = nil
-          end
+        if exists_local then
+          final_upstream = nil
         else
-          if exists_local then
-            vim.notify('Branch exists; ignoring base "' .. tostring(final_upstream) .. '"', vim.log.levels.INFO)
-            final_upstream = nil
+          if final_upstream == nil or final_upstream == '' then
+            -- Try to detect remote default branch (origin/HEAD)
+            local head = vim.fn.systemlist('git symbolic-ref -q --short refs/remotes/origin/HEAD')
+            if vim.v.shell_error == 0 and head and head[1] and head[1] ~= '' then
+              final_upstream = head[1]
+            else
+              -- Fallbacks
+              if cmd_ok('git show-ref --verify --quiet "refs/remotes/origin/main"') then
+                final_upstream = 'origin/main'
+              elseif cmd_ok('git show-ref --verify --quiet "refs/remotes/origin/master"') then
+                final_upstream = 'origin/master'
+              else
+                final_upstream = nil
+              end
+            end
+          else
+            -- Use provided base for new branch
+            final_upstream = upstream
           end
         end
 
