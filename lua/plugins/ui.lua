@@ -45,33 +45,18 @@ return {
   {
     'folke/which-key.nvim',
     event = 'VeryLazy',
-    -- no-neck-pain: registered in a separate spec, but add which-key group label early
-    {
-      'shortcuts/no-neck-pain.nvim',
-      keys = { '<leader>z' },
-      opts = false,
-      init = function()
-        local ok_wk, which_key = pcall(require, 'which-key')
-        if ok_wk then
-          which_key.add { { '<leader>z', group = 'Zen / NoNeckPain' } }
-        end
-      end,
-    },
-
     opts = {
       plugins = { spelling = true },
       win = { border = 'single' },
-      -- Silence noisy overlap warnings for common plugin prefixes
-      diagnostics = {
-        -- only show important issues
-        show_overlaps = false,
-        show_duplicates = true,
-        show_mappings = true,
-      },
-      -- Ignore some prefixes for overlap checks (Comment.nvim, nvim-surround)
-      -- Supported in recent which-key versions via exclude patterns
       notify = true,
     },
+  },
+
+  -- no-neck-pain (zen mode)
+  {
+    'shortcuts/no-neck-pain.nvim',
+    keys = { { '<leader>z', '<cmd>NoNeckPain<cr>', desc = 'Zen / NoNeckPain' } },
+    opts = {},
   },
 
   -- Statusline (no buffer tabline here; bufferline.nvim will handle tabs)

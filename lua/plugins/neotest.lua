@@ -1,6 +1,17 @@
 return {
   {
     'nvim-neotest/neotest',
+    lazy = true,
+    cmd = { 'Neotest' },
+    keys = {
+      { '<leader>tn', desc = 'Test: Run nearest' },
+      { '<leader>tf', desc = 'Test: Run file' },
+      { '<leader>tl', desc = 'Test: Run last' },
+      { '<leader>tS', desc = 'Test: Stop' },
+      { '<leader>ts', desc = 'Test: Toggle summary' },
+      { '<leader>to', desc = 'Test: Open output' },
+      { '<leader>tO', desc = 'Test: Toggle output panel' },
+    },
     dependencies = {
       'nvim-lua/plenary.nvim',
       'nvim-treesitter/nvim-treesitter',

@@ -5,7 +5,6 @@ vim.g.maplocalleader = ' '
 
 -- Disable language providers we don't use to silence health warnings
 vim.g.loaded_node_provider = 0
-
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_python3_provider = 0
 vim.g.loaded_ruby_provider = 0
@@ -28,7 +27,6 @@ vim.opt.rtp:prepend(lazypath)
 require 'config.options'
 require 'config.autocmds'
 
-
 -- Plugin specs are split by domain under lua/plugins/*.lua
 require('lazy').setup {
   spec = {
@@ -44,10 +42,12 @@ require('lazy').setup {
     { import = 'plugins.lint' },
     { import = 'plugins.lsp' },
     { import = 'plugins.neotest' },
-     { import = 'plugins.opencode' },
-     { import = 'plugins.codecompanion' },
-     { import = 'plugins.copilot' },
-     { import = 'plugins.copilotchat' },
+    { import = 'plugins.claudecode' },
+    { import = 'plugins.multiplexer' },
+    { import = 'plugins.copilot' },
+    { import = 'plugins.copilotchat' },
+    -- Machine-local plugins (gitignored)
+    vim.uv.fs_stat(vim.fn.stdpath 'config' .. '/lua/plugins/amperity.lua') and { import = 'plugins.amperity' } or {},
   },
   checker = { enabled = false },
   rocks = { enabled = false },

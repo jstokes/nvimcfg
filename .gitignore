@@ -1,0 +1,2 @@
+# Work-specific plugins (machine-local only)
+lua/plugins/amperity.lua
