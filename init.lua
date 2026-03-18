@@ -44,8 +44,6 @@ require('lazy').setup {
     { import = 'plugins.neotest' },
     { import = 'plugins.claudecode' },
     { import = 'plugins.multiplexer' },
-    { import = 'plugins.copilot' },
-    { import = 'plugins.copilotchat' },
     { import = 'plugins.markdown' },
     -- Machine-local plugins (gitignored)
     vim.uv.fs_stat(vim.fn.stdpath 'config' .. '/lua/plugins/amperity.lua') and { import = 'plugins.amperity' } or {},

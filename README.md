@@ -66,7 +66,6 @@ Personal Neovim configuration using [lazy.nvim](https://github.com/folke/lazy.nv
 | [LuaSnip](https://github.com/L3MON4D3/LuaSnip) | Snippet engine |
 | [cmp_luasnip](https://github.com/saadparwaiz1/cmp_luasnip) | LuaSnip completion source for nvim-cmp |
 | [cmp-conjure](https://github.com/PaterJason/cmp-conjure) | Conjure REPL completion source for Clojure/Fennel |
-| [copilot-cmp](https://github.com/zbirenbaum/copilot-cmp) | GitHub Copilot completion source |
 
 ### LSP & Linting
 
@@ -96,8 +95,6 @@ Personal Neovim configuration using [lazy.nvim](https://github.com/folke/lazy.nv
 | Plugin | Purpose |
 |--------|---------|
 | [claudecode.nvim](https://github.com/coder/claudecode.nvim) | Claude Code integration — terminal, diff review, and model selection |
-| [copilot.lua](https://github.com/zbirenbaum/copilot.lua) | GitHub Copilot integration (inline suggestions disabled, used via cmp) |
-| [CopilotChat.nvim](https://github.com/CopilotC-Nvim/CopilotChat.nvim) | Chat interface for GitHub Copilot |
 
 ### Multiplexer
 
@@ -135,8 +132,6 @@ Personal Neovim configuration using [lazy.nvim](https://github.com/folke/lazy.nv
 │       ├── paredit.lua         -- Structural editing
 │       ├── neotest.lua         -- Test runner
 │       ├── claudecode.lua      -- Claude Code AI
-│       ├── copilot.lua         -- GitHub Copilot
-│       ├── copilotchat.lua     -- Copilot Chat
 │       ├── multiplexer.lua     -- Terminal multiplexer nav
 │       ├── markdown.lua        -- Markdown preview
 │       └── no-neck-pain.lua    -- Zen mode (also referenced in ui.lua)

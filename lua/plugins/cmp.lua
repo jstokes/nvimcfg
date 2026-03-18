@@ -7,7 +7,6 @@ return {
       'hrsh7th/cmp-path',
       'L3MON4D3/LuaSnip',
       'saadparwaiz1/cmp_luasnip',
-      { 'zbirenbaum/copilot-cmp', dependencies = { 'zbirenbaum/copilot.lua' }, config = function() require('copilot_cmp').setup() end },
     },
     event = 'InsertEnter',
     config = function()
@@ -54,29 +53,11 @@ return {
              return {}
            end,
          },
-         sorting = {
-           comparators = (function()
-             local c = require('copilot_cmp.comparators')
-             return {
-               c.deprioritize,
-               cmp.config.compare.offset,
-               cmp.config.compare.exact,
-               cmp.config.compare.score,
-               cmp.config.compare.recently_used,
-               cmp.config.compare.locality,
-               cmp.config.compare.kind,
-               cmp.config.compare.sort_text,
-               cmp.config.compare.length,
-               cmp.config.compare.order,
-             }
-           end)(),
-         },
          -- Default sources: keep general priorities for non-Clojure buffers
          sources = cmp.config.sources {
             { name = 'nvim_lsp' },
             { name = 'buffer' },
             { name = 'path' },
-            { name = 'copilot' },
          },
  
          -- For Clojure buffers, prefer REPL (Conjure) completions when connected,
@@ -90,8 +71,7 @@ return {
        cmp.setup.filetype('clojure', {
          sources = cmp.config.sources(
            { { name = 'conjure' } },
-           { { name = 'nvim_lsp' }, { name = 'buffer' }, { name = 'path' } },
-           { { name = 'copilot' } }
+           { { name = 'nvim_lsp' }, { name = 'buffer' }, { name = 'path' } }
          ),
        })
 
@@ -99,8 +79,7 @@ return {
        cmp.setup.filetype('fennel', {
          sources = cmp.config.sources(
            { { name = 'conjure' } },
-           { { name = 'nvim_lsp' }, { name = 'buffer' }, { name = 'path' } },
-           { { name = 'copilot' } }
+           { { name = 'nvim_lsp' }, { name = 'buffer' }, { name = 'path' } }
          ),
        })
     end,
