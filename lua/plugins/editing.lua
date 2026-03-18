@@ -20,6 +20,6 @@ return {
   },
   { 'numToStr/Comment.nvim', opts = {} },
   { 'kylechui/nvim-surround', version = '*', opts = {} },
-  { 'ggandor/leap.nvim', opts = {} },
+  { url = 'https://codeberg.org/andyg/leap.nvim', opts = {} },
   { 'mg979/vim-visual-multi' },
 }
