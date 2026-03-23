@@ -6,15 +6,15 @@ return {
     event = 'InsertEnter',
     config = function()
       require('minuet').setup({
-        provider = 'openai_fim_compatible',
+        provider = 'openai_compatible',
         throttle = 500,
         debounce = 300,
         context_window = 4000,
         provider_options = {
-          openai_fim_compatible = {
+          openai_compatible = {
             api_key = 'TERM',
             name = 'Ollama',
-            end_point = 'http://localhost:11434/v1/completions',
+            end_point = 'http://localhost:11434/v1/chat/completions',
             model = 'qwen3-coder',
             optional = {
               max_tokens = 256,
