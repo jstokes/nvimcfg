@@ -4,7 +4,6 @@ return {
     version = '1.*',
     dependencies = {
       'saghen/blink.compat',
-      'milanglacier/minuet-ai.nvim',
       { 'PaterJason/cmp-conjure', ft = { 'clojure', 'fennel' }, dependencies = { 'Olical/conjure' } },
     },
     event = 'InsertEnter',
@@ -28,6 +27,7 @@ return {
         per_filetype = {
           clojure = { 'conjure', 'lsp', 'minuet', 'buffer', 'path' },
           fennel = { 'conjure', 'lsp', 'minuet', 'buffer', 'path' },
+          markdown = { 'lsp', 'buffer', 'path', 'snippets' },
         },
         providers = {
           minuet = {
