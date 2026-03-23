@@ -4,7 +4,7 @@ return {
     version = '1.*',
     dependencies = {
       'saghen/blink.compat',
-      'fang2hou/blink-copilot',
+      'milanglacier/minuet-ai.nvim',
       { 'PaterJason/cmp-conjure', ft = { 'clojure', 'fennel' }, dependencies = { 'Olical/conjure' } },
     },
     event = 'InsertEnter',
@@ -24,18 +24,18 @@ return {
       },
       signature = { enabled = true },
       sources = {
-        default = { 'lsp', 'copilot', 'buffer', 'path', 'snippets' },
+        default = { 'lsp', 'minuet', 'buffer', 'path', 'snippets' },
         per_filetype = {
-          -- Copilot excluded for Clojure/Fennel — REPL completions are more accurate
-          clojure = { 'conjure', 'lsp', 'buffer', 'path' },
-          fennel = { 'conjure', 'lsp', 'buffer', 'path' },
+          clojure = { 'conjure', 'lsp', 'minuet', 'buffer', 'path' },
+          fennel = { 'conjure', 'lsp', 'minuet', 'buffer', 'path' },
         },
         providers = {
-          copilot = {
-            name = 'copilot',
-            module = 'blink-copilot',
+          minuet = {
+            name = 'minuet',
+            module = 'minuet.blink',
             score_offset = -1, -- slightly lower priority than LSP
             async = true,
+            timeout_ms = 3000,
           },
           conjure = {
             name = 'conjure',

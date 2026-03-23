@@ -92,8 +92,7 @@ Personal Neovim configuration using [lazy.nvim](https://github.com/folke/lazy.nv
 | Plugin | Purpose |
 |--------|---------|
 | [claudecode.nvim](https://github.com/coder/claudecode.nvim) | Claude Code integration — terminal, diff review, and model selection |
-| [copilot.lua](https://github.com/zbirenbaum/copilot.lua) | GitHub Copilot AI completions (disabled for Clojure/Fennel to preserve REPL workflow) |
-| [blink-copilot](https://github.com/fang2hou/blink-copilot) | Copilot source for blink.cmp completion menu and ghost text |
+| [minuet-ai.nvim](https://github.com/milanglacier/minuet-ai.nvim) | Local AI code completions via Ollama (Qwen3-Coder) with blink.cmp integration |
 
 ### Multiplexer
 
@@ -129,6 +128,14 @@ brew install bat
 
 # Lua formatting
 brew install stylua
+
+# Treesitter CLI (required for parser compilation on Neovim 0.11+)
+brew install tree-sitter
+
+# Ollama + Qwen3-Coder for local AI completions
+brew install ollama
+brew services start ollama
+ollama pull qwen3-coder
 ```
 
 ## Structure
@@ -156,7 +163,7 @@ brew install stylua
 │       ├── paredit.lua         -- Structural editing
 │       ├── neotest.lua         -- Test runner
 │       ├── claudecode.lua      -- Claude Code AI
-│       ├── copilot.lua         -- GitHub Copilot AI completions
+│       ├── minuet.lua          -- Local AI completions (Ollama + Qwen3-Coder)
 │       ├── multiplexer.lua     -- Terminal multiplexer nav
 │       ├── markdown.lua        -- Markdown preview
 │       └── no-neck-pain.lua    -- Zen mode
