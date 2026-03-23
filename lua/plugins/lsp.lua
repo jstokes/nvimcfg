@@ -8,7 +8,7 @@ return {
           ['project-specs'] = {
             {
               ['project-path'] = 'project.clj',
-              ['classpath-cmd'] = { 'lein', 'with-all', 'classpath' },
+              ['classpath-cmd'] = { 'lein', 'monolith', 'with-all', 'classpath' },
             },
             {
               ['project-path'] = 'deps.edn',
