@@ -28,7 +28,24 @@ return {
     end,
   },
   { 'ruifm/gitlinker.nvim', dependencies = { 'nvim-lua/plenary.nvim' }, opts = {} },
-  { 'TimUntersberger/neogit', dependencies = { 'nvim-lua/plenary.nvim' } },
+  {
+    'TimUntersberger/neogit',
+    dependencies = { 'nvim-lua/plenary.nvim', 'sindrets/diffview.nvim' },
+    cmd = 'Neogit',
+    opts = {
+      integrations = { diffview = true },
+    },
+  },
+  {
+    'sindrets/diffview.nvim',
+    cmd = { 'DiffviewOpen', 'DiffviewFileHistory', 'DiffviewClose' },
+    opts = {},
+    keys = {
+      { '<leader>gd', '<cmd>DiffviewOpen<cr>', desc = 'Diffview: Open' },
+      { '<leader>gD', '<cmd>DiffviewFileHistory %<cr>', desc = 'Diffview: File history' },
+      { '<leader>gq', '<cmd>DiffviewClose<cr>', desc = 'Diffview: Close' },
+    },
+  },
   {
     'ThePrimeagen/git-worktree.nvim',
     dependencies = { 'nvim-telescope/telescope.nvim' },
@@ -129,20 +146,11 @@ return {
         end
         create_trees_worktree(branch, upstream)
       end, { nargs = '*' })
-
-      -- If you want Neogit to open automatically on switch, uncomment below:
-      -- Worktree.on_tree_change(function(op)
-      --   if op == Worktree.Operations.Switch then
-      --     vim.schedule(function()
-      --       local ok_ng, neogit = pcall(require, 'neogit')
-      --       if ok_ng then neogit.open({ kind = 'tab' }) end
-      --     end)
-      --   end
-      -- end)
     end,
   },
   {
     'pwntester/octo.nvim',
+    cmd = 'Octo',
     dependencies = {
       'nvim-lua/plenary.nvim',
       'nvim-telescope/telescope.nvim',

@@ -4,22 +4,24 @@ return {
   {
     'windwp/nvim-autopairs',
     event = 'InsertEnter',
-    config = function()
-      local npairs = require('nvim-autopairs')
-      npairs.setup({
-        check_ts = true,
-        enable_check_bracket_line = false,
-        disable_filetype = { 'TelescopePrompt' },
-      })
-      local ok_cmp, cmp = pcall(require, 'cmp')
-      if ok_cmp then
-        local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-        cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
-      end
-    end,
+    opts = {
+      check_ts = true,
+      enable_check_bracket_line = false,
+      disable_filetype = { 'TelescopePrompt', 'FzfLua' },
+    },
   },
   { 'numToStr/Comment.nvim', opts = {} },
   { 'kylechui/nvim-surround', version = '*', opts = {} },
-  { url = 'https://codeberg.org/andyg/leap.nvim', opts = {} },
+  {
+    'folke/flash.nvim',
+    event = 'VeryLazy',
+    opts = {},
+    keys = {
+      { 's', mode = { 'n', 'x', 'o' }, function() require('flash').jump() end, desc = 'Flash' },
+      { 'S', mode = { 'n', 'x', 'o' }, function() require('flash').treesitter() end, desc = 'Flash Treesitter' },
+      { 'r', mode = 'o', function() require('flash').remote() end, desc = 'Remote Flash' },
+      { 'R', mode = { 'o', 'x' }, function() require('flash').treesitter_search() end, desc = 'Treesitter Search' },
+    },
+  },
   { 'mg979/vim-visual-multi' },
 }

@@ -36,25 +36,19 @@ vim.keymap.set('n', '<leader>qq', ':confirm qall<CR>', { desc = 'Quit Neovim (co
 -- Insert-mode convenience
 vim.keymap.set('i', 'fd', '<Esc>', { desc = 'Escape insert', noremap = true })
 
--- Emacs-style file open: C-x C-f (normal/insert)
-local function open_file_browser_cwd()
-  local fb_ok = pcall(function()
-    require('telescope').extensions.file_browser.file_browser {
-      cwd = vim.fn.expand '%:p:h',
-      select_buffer = true,
-      hidden = true,
-      respect_gitignore = false,
-    }
+-- Emacs-style file open: C-x C-f (normal/insert) - uses fzf-lua
+local function open_files_cwd()
+  local ok = pcall(function()
+    require('fzf-lua').files({ cwd = vim.fn.expand('%:p:h') })
   end)
-  if not fb_ok then
-    -- Fallback to find_files in current dir
-    require('telescope.builtin').find_files { cwd = vim.fn.expand '%:p:h' }
+  if not ok then
+    vim.notify('fzf-lua not loaded', vim.log.levels.WARN)
   end
 end
 
-vim.keymap.set('n', '<C-x><C-f>', open_file_browser_cwd, { desc = 'Open file (Emacs C-x C-f)' })
+vim.keymap.set('n', '<C-x><C-f>', open_files_cwd, { desc = 'Open file (Emacs C-x C-f)' })
 vim.keymap.set('i', '<C-x><C-f>', function()
-  open_file_browser_cwd()
+  open_files_cwd()
 end, { desc = 'Open file (Emacs C-x C-f)' })
 
 -- Which-key group registrations
@@ -74,25 +68,29 @@ if ok_wk then
     { '<leader>kw', group = 'Wrap' },
     { '<leader>m', group = 'Clojure' },
     { '<leader>me', group = 'Eval' },
+    { '<leader>x', group = 'Trouble' },
   }
 end
 
 local map = vim.keymap.set
--- Telescope (wrap to lazy-require on execution)
+
+-- Toggle lint
 map('n', '<leader>tL', ':ALEToggleBuffer<CR>', { desc = 'Toggle lint (ALE buffer)' })
 
+-- fzf-lua pickers
 map('n', '<leader>ff', function()
-  require('telescope.builtin').find_files()
+  require('fzf-lua').files()
 end, { desc = 'Find files' })
 map('n', '<leader>fg', function()
-  require('telescope.builtin').live_grep()
+  require('fzf-lua').live_grep()
 end, { desc = 'Live grep' })
 map('n', '<leader>fb', function()
-  require('telescope.builtin').buffers()
+  require('fzf-lua').buffers()
 end, { desc = 'Buffers' })
 map('n', '<leader>fh', function()
-  require('telescope.builtin').help_tags()
+  require('fzf-lua').help_tags()
 end, { desc = 'Help' })
+
 -- Project-aware live grep: git root if available, else current working dir
 local function project_root()
   local function try_git_root(dir)
@@ -123,12 +121,12 @@ local function grep_in_dir_prompt()
     vim.notify('Not a directory: ' .. dir, vim.log.levels.ERROR)
     return
   end
-  require('telescope.builtin').live_grep { cwd = dir }
+  require('fzf-lua').live_grep({ cwd = dir })
 end
 
--- Telescope: quick recent-buffers switcher
+-- fzf-lua: quick recent-buffers switcher
 vim.keymap.set('n', '<leader>,', function()
-  require('telescope.builtin').buffers { sort_lastused = true, ignore_current_buffer = true }
+  require('fzf-lua').buffers({ sort_lastused = true })
 end, { desc = 'Switch buffer (recent first)' })
 
 -- Alternate buffer toggle
@@ -170,16 +168,12 @@ end
 
 map('n', '<leader>/', function()
   local root = project_root()
-  require('telescope.builtin').live_grep { cwd = root }
+  require('fzf-lua').live_grep({ cwd = root })
 end, { desc = 'Live grep (project root)' })
+
 map('n', '<leader>sp', function()
-  local ok = pcall(function()
-    require('telescope').extensions.project.project()
-  end)
-  if not ok then
-    vim.notify('telescope-project not loaded', vim.log.levels.WARN)
-  end
-end, { desc = 'Projects' })
+  require('fzf-lua').oldfiles()
+end, { desc = 'Recent files' })
 
 -- Search helpers
 map('n', '<leader>sc', ':nohlsearch<CR>', { desc = 'Clear search highlights' })
@@ -196,7 +190,7 @@ vim.keymap.set('n', '<leader>sf', function()
     vim.notify('Not a directory: ' .. dir, vim.log.levels.ERROR)
     return
   end
-  require('telescope.builtin').find_files { cwd = dir, hidden = true }
+  require('fzf-lua').files({ cwd = dir })
 end, { desc = 'Files: find in directory…' })
 
 -- Gitsigns
@@ -209,13 +203,14 @@ end, { desc = 'Preview hunk' })
 map('n', '<leader>gr', function()
   require('gitsigns').reset_hunk()
 end, { desc = 'Reset hunk' })
+
 -- Command palette and builtins
 vim.keymap.set('n', '<leader>p', function()
-  require('telescope.builtin').commands()
+  require('fzf-lua').commands()
 end, { desc = 'Command Palette' })
 vim.keymap.set('n', '<leader>?', function()
-  require('telescope.builtin').builtin()
-end, { desc = 'Telescope builtins' })
+  require('fzf-lua').builtin()
+end, { desc = 'FzfLua builtins' })
 
 -- Gitlinker
 map('n', '<leader>gl', function()
@@ -226,7 +221,8 @@ map('n', '<leader>gl', function()
     vim.notify('gitlinker not loaded', vim.log.levels.WARN)
   end
 end, { desc = 'Copy GitHub permalink' })
--- Git worktrees via Telescope
+
+-- Git worktrees via Telescope (kept on telescope for plugin compatibility)
 map('n', '<leader>gw', function()
   local ok = pcall(function()
     require('telescope').extensions.git_worktree.git_worktrees()
@@ -243,15 +239,9 @@ map('n', '<leader>gW', function()
     vim.notify('git-worktree not loaded', vim.log.levels.WARN)
   end
 end, { desc = 'Worktree: create (.trees/{branch})' })
+
 -- Neogit (status)
-map('n', '<leader>gg', function()
-  local ok, neogit = pcall(require, 'neogit')
-  if ok then
-    neogit.open { kind = 'tab' }
-  else
-    vim.notify('neogit not loaded', vim.log.levels.WARN)
-  end
-end, { desc = 'Git status (Neogit)' })
+map('n', '<leader>gg', '<cmd>Neogit kind=tab<cr>', { desc = 'Git status (Neogit)' })
 
 -- Windows
 map('n', '<leader>ws', ':split<CR>', { desc = 'Horizontal split' })
@@ -278,6 +268,7 @@ map('n', '<leader>wK', '<C-w>K', { desc = 'Move to top' })
 map('n', '<leader>wL', '<C-w>L', { desc = 'Move to right' })
 map('n', '<leader>w=', '<C-w>=', { desc = 'Equalize windows' })
 map('n', '<leader>wx', ':xall<CR>', { desc = 'Save & exit all' })
+
 -- Octo (GitHub) mappings
 map('n', '<leader>ghl', ':Octo pr list<CR>', { desc = 'PR list' })
 map('n', '<leader>gho', ':Octo pr view<CR>', { desc = 'PR view (current)' })
@@ -289,7 +280,7 @@ map('n', '<leader>ghi', ':Octo issue list<CR>', { desc = 'Issues list' })
 
 -- Buffer
 map('n', '<leader>bb', function()
-  require('telescope.builtin').buffers()
+  require('fzf-lua').buffers()
 end, { desc = 'List buffers' })
 do
   local ok_brm2, brm2 = pcall(require, 'mini.bufremove')
