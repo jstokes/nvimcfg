@@ -23,19 +23,18 @@ return {
       },
       signature = { enabled = true },
       sources = {
-        default = { 'lsp', 'minuet', 'buffer', 'path', 'snippets' },
+        default = { 'lsp', 'copilot', 'buffer', 'path', 'snippets' },
         per_filetype = {
-          clojure = { 'conjure', 'lsp', 'minuet', 'buffer', 'path' },
-          fennel = { 'conjure', 'lsp', 'minuet', 'buffer', 'path' },
+          clojure = { 'conjure', 'lsp', 'buffer', 'path' },
+          fennel = { 'conjure', 'lsp', 'buffer', 'path' },
           markdown = { 'lsp', 'buffer', 'path', 'snippets' },
         },
         providers = {
-          minuet = {
-            name = 'minuet',
-            module = 'minuet.blink',
+          copilot = {
+            name = 'copilot',
+            module = 'blink-copilot',
             score_offset = -1, -- slightly lower priority than LSP
             async = true,
-            timeout_ms = 3000,
           },
           conjure = {
             name = 'conjure',
