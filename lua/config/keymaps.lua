@@ -17,6 +17,41 @@ vim.keymap.set('n', '<leader>lf', function()
   vim.lsp.buf.format { async = true }
 end, { desc = 'LSP: Format' })
 
+-- Override gd/gD with LSP when a language server is attached
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(args)
+    local opts = { buffer = args.buf }
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, vim.tbl_extend('force', opts, { desc = 'LSP: Go to Definition' }))
+    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, vim.tbl_extend('force', opts, { desc = 'LSP: Go to Declaration' }))
+    vim.keymap.set('n', 'gr', vim.lsp.buf.references, vim.tbl_extend('force', opts, { desc = 'LSP: References' }))
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, vim.tbl_extend('force', opts, { desc = 'LSP: Hover' }))
+  end,
+})
+
+-- Conjure REPL-based go-to-definition for Clojure when no LSP is attached
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'clojure', 'fennel' },
+  callback = function(args)
+    -- Only set the fallback if no LSP client is attached
+    -- (LspAttach autocmd above will override this if LSP connects later)
+    vim.defer_fn(function()
+      if not vim.api.nvim_buf_is_valid(args.buf) then return end
+      local clients = vim.lsp.get_clients({ bufnr = args.buf })
+      if #clients == 0 then
+        vim.keymap.set('n', 'gd', function()
+          -- Check again at invoke time in case LSP attached after FileType
+          if #vim.lsp.get_clients({ bufnr = 0 }) > 0 then
+            vim.lsp.buf.definition()
+          else
+            vim.cmd('ConjureDefWord')
+          end
+        end, { buffer = args.buf, desc = 'Go to Definition (Conjure fallback)' })
+      end
+    end, 500)
+  end,
+})
+
+
 local has_persist, persistence = pcall(require, 'persistence')
 if has_persist then
   vim.keymap.set('n', '<leader>qs', function()
