@@ -156,7 +156,15 @@ return {
       'nvim-telescope/telescope.nvim',
     },
     config = function()
-      require('octo').setup()
+      require('octo').setup({
+        mappings = {
+          submit_win = {
+            approve_review = { lhs = '<leader>sa', desc = 'approve review' },
+            comment_review = { lhs = '<leader>sc', desc = 'comment review' },
+            request_changes = { lhs = '<leader>sr', desc = 'request changes' },
+          },
+        },
+      })
     end,
   },
 }

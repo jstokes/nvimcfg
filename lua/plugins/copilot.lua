@@ -9,10 +9,7 @@ return {
         enabled = false, -- we use blink.cmp to display completions instead
       },
       panel = { enabled = false },
-      filetypes = {
-        clojure = false,
-        fennel = false,
-      },
+      filetypes = {},
     },
   },
   {

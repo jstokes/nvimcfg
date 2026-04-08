@@ -25,8 +25,8 @@ return {
       sources = {
         default = { 'lsp', 'copilot', 'buffer', 'path', 'snippets' },
         per_filetype = {
-          clojure = { 'conjure', 'lsp', 'buffer', 'path' },
-          fennel = { 'conjure', 'lsp', 'buffer', 'path' },
+          clojure = { 'conjure', 'lsp', 'copilot', 'buffer', 'path' },
+          fennel = { 'conjure', 'lsp', 'copilot', 'buffer', 'path' },
           markdown = { 'lsp', 'buffer', 'path', 'snippets' },
         },
         providers = {
