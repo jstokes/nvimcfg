@@ -103,6 +103,7 @@ if ok_wk then
     { '<leader>kw', group = 'Wrap' },
     { '<leader>m', group = 'Clojure' },
     { '<leader>me', group = 'Eval' },
+    { '<leader>mr', group = 'Refactor' },
     { '<leader>x', group = 'Trouble' },
   }
 end
@@ -398,6 +399,22 @@ vim.keymap.set('n', '<leader>dt', function()
   vim.diagnostic.config { virtual_text = not enabled }
   vim.notify('Diagnostics virtual_text: ' .. (enabled and 'OFF' or 'ON'), vim.log.levels.INFO)
 end, { desc = 'Toggle virtual text' })
+
+-- Clojure refactoring (clojure-lsp code actions)
+local function clj_lsp_action(action_name)
+  return function()
+    vim.lsp.buf.code_action({
+      filter = function(action)
+        return action.title:lower():find(action_name:lower()) ~= nil
+      end,
+      apply = true,
+    })
+  end
+end
+
+map('n', '<leader>mrtf', clj_lsp_action('Thread first'), { desc = 'Refactor: thread first' })
+map('n', '<leader>mrtl', clj_lsp_action('Thread last'), { desc = 'Refactor: thread last' })
+map('n', '<leader>mruw', clj_lsp_action('Unwind thread'), { desc = 'Refactor: unwind thread' })
 
 -- Terminal: pass Ctrl-w to Vim
 vim.keymap.set(
