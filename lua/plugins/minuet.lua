@@ -1,4 +1,4 @@
--- minuet-ai.nvim - Local AI code completions via Ollama (gemma4)
+-- minuet-ai.nvim - Local AI code completions via Ollama (qwen3-coder)
 return {
   {
     'milanglacier/minuet-ai.nvim',
@@ -12,7 +12,7 @@ return {
             end_point = 'http://localhost:11434/v1/chat/completions',
             api_key = 'TERM',
             name = 'Ollama',
-            model = 'gemma4:26b',
+            model = 'qwen3-coder',
             stream = true,
             optional = {
               max_tokens = 256,
