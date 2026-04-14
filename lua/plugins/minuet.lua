@@ -1,4 +1,4 @@
--- minuet-ai.nvim - Local AI code completions via Ollama (qwen3-coder)
+-- minuet-ai.nvim - Local AI code completions via LM Studio (qwen3.5-35b-a3b)
 return {
   {
     'milanglacier/minuet-ai.nvim',
@@ -9,10 +9,10 @@ return {
         context_window = 512,
         provider_options = {
           openai_compatible = {
-            end_point = 'http://localhost:11434/v1/chat/completions',
-            api_key = 'TERM',
-            name = 'Ollama',
-            model = 'qwen3-coder',
+            end_point = 'http://localhost:1234/v1/chat/completions',
+            api_key = 'lm-studio',
+            name = 'LM Studio',
+            model = 'qwen3.5-35b-a3b',
             stream = true,
             optional = {
               max_tokens = 256,
