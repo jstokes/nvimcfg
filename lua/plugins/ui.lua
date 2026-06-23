@@ -88,6 +88,21 @@ return {
     opts = { options = { 'buffers', 'curdir', 'tabpages', 'winsize' } },
   },
 
+  -- Animated cursor smear
+  {
+    'sphamba/smear-cursor.nvim',
+    opts = {
+      -- "Faster smear" preset from the README
+      stiffness = 0.8,
+      trailing_stiffness = 0.6,
+      stiffness_insert_mode = 0.7,
+      trailing_stiffness_insert_mode = 0.7,
+      damping = 0.95,
+      damping_insert_mode = 0.95,
+      distance_stop_animating = 0.5,
+    },
+  },
+
   -- Bufferline for better buffer navigation
   {
     'akinsho/bufferline.nvim',
