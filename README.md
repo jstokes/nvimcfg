@@ -91,8 +91,10 @@ Personal Neovim configuration using [lazy.nvim](https://github.com/folke/lazy.nv
 
 | Plugin | Purpose |
 |--------|---------|
+| [copilot.lua](https://github.com/zbirenbaum/copilot.lua) | GitHub Copilot completions (manually triggered via blink.cmp) |
+| [blink-copilot](https://github.com/fang2hou/blink-copilot) | Copilot source adapter for blink.cmp |
 | [claudecode.nvim](https://github.com/coder/claudecode.nvim) | Claude Code integration — terminal, diff review, and model selection |
-| [minuet-ai.nvim](https://github.com/milanglacier/minuet-ai.nvim) | Local AI code completions via Ollama (Qwen3-Coder) with blink.cmp integration |
+| [minuet-ai.nvim](https://github.com/milanglacier/minuet-ai.nvim) | Local AI code completions via LM Studio (Qwen3.5) with blink.cmp integration |
 
 ### Multiplexer
 
@@ -162,8 +164,9 @@ ollama pull qwen3-coder
 │       ├── clojure.lua         -- Conjure REPL
 │       ├── paredit.lua         -- Structural editing
 │       ├── neotest.lua         -- Test runner
+│       ├── copilot.lua         -- GitHub Copilot AI completions (manual trigger)
 │       ├── claudecode.lua      -- Claude Code AI
-│       ├── minuet.lua          -- Local AI completions (Ollama + Qwen3-Coder)
+│       ├── minuet.lua          -- Local AI completions (LM Studio + Qwen3.5)
 │       ├── multiplexer.lua     -- Terminal multiplexer nav
 │       ├── markdown.lua        -- Markdown preview
 │       └── no-neck-pain.lua    -- Zen mode
@@ -218,3 +221,4 @@ Leader key is `<Space>`. Use `<leader>` followed by any key to see available bin
 | `<Tab>` | Accept completion (fish-style ghost text via blink.cmp) |
 | `<S-Tab>` | Previous completion item |
 | `<C-Space>` | Trigger completion menu |
+| `<C-x><C-a>` | Trigger AI completions (Copilot + minuet) |

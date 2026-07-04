@@ -10,7 +10,7 @@ return {
         provider_options = {
           openai_compatible = {
             end_point = 'http://localhost:1234/v1/chat/completions',
-            api_key = 'lm-studio',
+            api_key = function() return 'lm-studio' end,
             name = 'LM Studio',
             model = 'qwen3.5-35b-a3b',
             stream = true,
