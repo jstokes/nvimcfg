@@ -24,6 +24,14 @@ return {
         end
         vim.notify('clojure-lsp started', vim.log.levels.INFO)
       end, { desc = 'Start clojure-lsp' })
+
+      local capabilities = nil
+      local has_blink, blink = pcall(require, 'blink.cmp')
+      if has_blink then
+        capabilities = blink.get_lsp_capabilities()
+      end
+      vim.lsp.config('zls', { capabilities = capabilities })
+      vim.lsp.enable('zls')
     end,
   },
   {

@@ -8,7 +8,8 @@ return {
       local ensure_installed = {
         'clojure', 'fennel', 'scheme',
         'lua', 'vim', 'vimdoc', 'query',
-        'markdown', 'markdown_inline'
+        'markdown', 'markdown_inline',
+        'zig'
       }
 
       -- Install missing parsers on startup
