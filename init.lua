@@ -44,6 +44,7 @@ require('lazy').setup {
     { import = 'plugins.trouble' },
     { import = 'plugins.neotest' },
     { import = 'plugins.claudecode' },
+    { import = 'plugins.sidekick' },
     { import = 'plugins.99' },
     { import = 'plugins.copilot' },
     { import = 'plugins.minuet' },

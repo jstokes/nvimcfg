@@ -28,15 +28,17 @@ return {
       local neotest = require('neotest')
       neotest.setup({
         adapters = {
+          require('config.neotest-zig')({}),
           require('neotest-vim-test')({
             allow_mixed_filetypes = true,
             -- Limit vim-test adapter focus primarily to Clojure
-            ignore_file_types = { 'python', 'javascript', 'typescript', 'go', 'rust', 'ruby', 'lua' },
+            ignore_file_types = { 'python', 'javascript', 'typescript', 'go', 'rust', 'ruby', 'lua', 'zig' },
           }),
         },
         quickfix = { enabled = true, open = false },
         diagnostic = { enabled = true },
-        output = { open_on_run = false },
+        status = { enabled = true, virtual_text = true, signs = true },
+        output = { open_on_run = 'short' },
         floating = { border = 'rounded' },
       })
 

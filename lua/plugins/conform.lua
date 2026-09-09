@@ -5,6 +5,7 @@ return {
       formatters_by_ft = {
         clojure = { 'cljstyle' },
         lua = { 'stylua' },
+        zig = { 'zigfmt' },
       },
       format_on_save = {
 	lsp_fallback = false,
