@@ -1,26 +1,19 @@
 return {
   {
     'nvim-treesitter/nvim-treesitter',
+    branch = 'main',
+    lazy = false,
     build = ':TSUpdate',
-    event = { 'BufReadPost', 'BufNewFile' },
     config = function()
       -- New nvim-treesitter API - parsers must be installed explicitly
       local ensure_installed = {
         'clojure', 'fennel', 'scheme',
         'lua', 'vim', 'vimdoc', 'query',
         'markdown', 'markdown_inline',
-        'zig'
+        'zig',
       }
 
-      -- Install missing parsers on startup
-      local installed = require('nvim-treesitter').get_installed()
-      local to_install = vim.tbl_filter(function(lang)
-        return not vim.tbl_contains(installed, lang)
-      end, ensure_installed)
-
-      if #to_install > 0 then
-        require('nvim-treesitter').install(to_install)
-      end
+      require('nvim-treesitter').install(ensure_installed)
 
       -- Enable treesitter highlighting for supported filetypes
       vim.api.nvim_create_autocmd('FileType', {
