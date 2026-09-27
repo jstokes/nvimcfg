@@ -32,6 +32,11 @@ return {
       end
       vim.lsp.config('zls', { capabilities = capabilities })
       vim.lsp.enable('zls')
+      vim.lsp.config('roc_ls', {
+        cmd = { 'roc', 'experimental-lsp' },
+        capabilities = capabilities,
+      })
+      vim.lsp.enable('roc_ls')
     end,
   },
   {

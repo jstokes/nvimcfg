@@ -6,6 +6,14 @@ return {
         clojure = { 'cljstyle' },
         lua = { 'stylua' },
         zig = { 'zigfmt' },
+        roc = { 'roc' },
+      },
+      formatters = {
+        roc = {
+          command = 'roc',
+          args = { 'fmt', '--stdin' },
+          stdin = true,
+        },
       },
       format_on_save = {
 	lsp_fallback = false,

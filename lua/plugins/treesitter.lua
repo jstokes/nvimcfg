@@ -10,7 +10,7 @@ return {
         'clojure', 'fennel', 'scheme',
         'lua', 'vim', 'vimdoc', 'query',
         'markdown', 'markdown_inline',
-        'zig',
+        'zig', 'roc',
       }
 
       require('nvim-treesitter').install(ensure_installed)
